@@ -1,0 +1,16 @@
+# --- Node Service ---
+node_service/node_modules/
+node_service/.env
+node_service/npm-debug.log
+
+# --- Nginx & Cache ---
+nginx/logs/
+cache-disk/
+
+# --- Database (Cực kỳ quan trọng) ---
+mongo-data/
+db-data/
+
+# --- System ---
+.DS_Store
+.env
