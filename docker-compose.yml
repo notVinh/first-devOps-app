@@ -1,9 +1,10 @@
 services:
   first-api:
-    build: ./node_service
     container_name: first-node-service
-    ports:
-      - "5000:5000"
+    image: nashydawg/first-devops-app:latest
+    # build: ./node_service
+    # ports:
+    #   - "5000:5000"
     restart: always
     environment:
       - MONGO_URL=mongodb://db:27017/firstdb
