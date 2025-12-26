@@ -1,55 +1,55 @@
-name: CI Check Code
-on: [push]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20 # Sửa lỗi dấu nháy đơn ở đây
-
-      - name: Install Dependencies
-        # Bạn phải cd vào thư mục chứa code thì mới chạy npm install được
-        run: |
-          cd node_service
-          npm install
-          
-      - name: Success Message
-        run: echo "✅ Code trong node_service đã sẵn sàng để Dockerize!"
-
-# # su dung webhook de chay file deloy.sh
-# name: Build and Push Docker Image
-# on:
-#   push:
-#     branches: [ "main" ] # Chỉ chạy khi push vào nhánh main
+# name: CI Check Code
+# on: [push]
 
 # jobs:
-#   push_to_registry:
-#     name: Push Docker image to Docker Hub
+#   build:
 #     runs-on: ubuntu-latest
 #     steps:
-#       - name: Check out the repo
-#         uses: actions/checkout@v3
-
-#       - name: Log in to Docker Hub
-#         uses: docker/login-action@v2
+#       - uses: actions/checkout@v3
+      
+#       - name: Use Node.js
+#         uses: actions/setup-node@v3
 #         with:
-#           username: ${{ secrets.DOCKERHUB_USERNAME }}
-#           password: ${{ secrets.DOCKERHUB_TOKEN }}
+#           node-version: 20 # Sửa lỗi dấu nháy đơn ở đây
 
-#       - name: Build and push Docker image
-#         uses: docker/build-push-action@v4
-#         with:
-#           context: .
-#           push: true
-#           tags: nashydawg/ex-user:latest
-
-#       - name: Trigger Webhook Deployment
+#       - name: Install Dependencies
+#         # Bạn phải cd vào thư mục chứa code thì mới chạy npm install được
 #         run: |
-#           curl -X POST https://41761d4ec6d1.ngrok-free.app/hooks/redeploy \
-#           -H "Content-Type: application/json" \
-#           -d '{"token": "secret-payload-123"}'
+#           cd node_service
+#           npm install
+          
+#       - name: Success Message
+#         run: echo "✅ Code trong node_service đã sẵn sàng để Dockerize!"
+
+# su dung webhook de chay file deloy.sh
+name: Build and Push Docker Image
+on:
+  push:
+    branches: [ "main" ] # Chỉ chạy khi push vào nhánh main
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: nashydawg/first-devops-app:latest
+
+      # - name: Trigger Webhook Deployment
+      #   run: |
+      #     curl -X POST https://41761d4ec6d1.ngrok-free.app/hooks/redeploy \
+      #     -H "Content-Type: application/json" \
+      #     -d '{"token": "secret-payload-123"}'
