@@ -1,17 +1,25 @@
 name: CI Check Code
-on: [push] # Chạy mỗi khi có lệnh push
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
-      - run: npm install
-      - run: echo "✅ Code đã sẵn sàng để Dockerize!"
+          node-version: 20 # Sửa lỗi dấu nháy đơn ở đây
+
+      - name: Install Dependencies
+        # Bạn phải cd vào thư mục chứa code thì mới chạy npm install được
+        run: |
+          cd node_service
+          npm install
+          
+      - name: Success Message
+        run: echo "✅ Code trong node_service đã sẵn sàng để Dockerize!"
 
 # # su dung webhook de chay file deloy.sh
 # name: Build and Push Docker Image
