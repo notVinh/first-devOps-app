@@ -44,7 +44,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./node_service
+          file: ./node_service/Dockerfile
           push: true
           tags: nashydawg/first-devops-app:latest
 
